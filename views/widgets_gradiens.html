@@ -1,0 +1,92 @@
+<div ng-controller="gradMainCtrl">
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <section ng-class="{'bg-success': gms.status.active, 'bg-danger': !gms.status.active}" class="widget text-white" >
+            <div class="widget-body clearfix">
+                <div class="row">
+                    <div class="col-xs-3">
+                                <span class="widget-icon">
+                                    <i class="glyphicon glyphicon-globe"></i>
+                                </span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h5 class="no-margin">Estado de la maquina</h5>
+                        <p class="h2 no-margin fw-normal">{{gms.status.active? "Activo" : "Inactivo"}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">Ultimo check</h5>
+                        <p class="value5">Hace {{gms.status.lastChecked | timeSince}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">Ultima respuesta</h5>
+                        <p class="value5">Hace <span time-since-dir></span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+   
+    
+    
+</div>
+<div class="row">
+
+	<div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.y ">
+		<section class="widget">
+                <header>
+                    <h4>
+						{{quest}} </span>
+                    </h4>
+                    <div class="widget-controls">
+                        <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                        <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+                </header>
+                <div class="widget-body">
+                    <div  data-morris-chart id="{{quest}}">
+                    </div>  
+				
+				
+                  
+                </div>
+            </section>
+	</div>
+	
+	
+	
+	
+</div>
+
+<div class="row">
+
+	<div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.x ">
+		<section class="widget">
+                <header>
+                    <h4>
+						{{quest}} </span>
+                    </h4>
+                    <div class="widget-controls">
+                        <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                        <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+                </header>
+                <div class="widget-body">
+                    <div  data-morris-chart id="{{quest}}">
+                    </div>  
+				
+				
+                  
+                </div>
+            </section>
+	</div>
+	
+	
+	
+	
+</div>
+
+</div>
