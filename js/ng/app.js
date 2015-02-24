@@ -27,7 +27,7 @@ singApp.constant('fbURL', "https://celsius-avocado.firebaseio.com");
 
 singApp.config(function($stateProvider, $urlRouterProvider){
 
-    // For any unmatched url, send to /dashboard
+    // For any unmatched url, send to /dashboard **************
     $urlRouterProvider.otherwise("/app/dashboard");
 
     $stateProvider
