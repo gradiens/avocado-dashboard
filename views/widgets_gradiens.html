@@ -31,62 +31,105 @@
     
     
 </div>
-<div class="row">
 
-	<div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.y ">
-		<section class="widget">
-                <header>
-                    <h4>
-						{{quest}} </span>
-                    </h4>
-                    <div class="widget-controls">
-                        <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
-                        <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
-                        <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
-                    </div>
-                </header>
-                <div class="widget-body">
-                    <div  data-morris-chart id="{{quest}}">
-                    </div>  
-				
-				
-                  
+ 
+
+
+ 
+        <div class="panel-group mb-lg" id="accordion2" data-toggle="collapse">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion2" data-target="#collapseOne2">
+                            Preguntas Y
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </a>
+                    </h5>
                 </div>
-            </section>
-	</div>
-	
-	
-	
-	
-</div>
+                <div id="collapseOne2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
 
-<div class="row">
+                            <div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.y ">
+                                <section class="widget">
+                                        <header>
+                                            <h4>
+                                                {{quest}} </span>
+                                            </h4>
+                                            <div class="widget-controls">
+                                                <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                                                <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                                            </div>
+                                        </header>
+                                        <div class="widget-body">
+                                            <div  data-morris-chart id="{{quest}}">
+                                            </div>  
 
-	<div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.x ">
-		<section class="widget">
-                <header>
-                    <h4>
-						{{quest}} </span>
-                    </h4>
-                    <div class="widget-controls">
-                        <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
-                        <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
-                        <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+
+
+                                        </div>
+                                    </section>
+                            </div>
+
+
+
+                        </div>                           
+                        
+                        
+                        
+            
+                    
                     </div>
-                </header>
-                <div class="widget-body">
-                    <div  data-morris-chart id="{{quest}}">
-                    </div>  
-				
-				
-                  
                 </div>
-            </section>
-	</div>
-	
-	
-	
-	
-</div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion2" data-target="#collapseTwo2">
+                            Preguntas X
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        
+                        <div class="row">
 
+                            <div class="col-md-3 col-sm-6" ng-repeat="(quest, val) in morrOptions.x ">
+                                <section class="widget">
+                                        <header>
+                                            <h4>
+                                                {{quest}} </span>
+                                            </h4>
+                                            <div class="widget-controls">
+                                                <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                                                <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
+                                            </div>
+                                        </header>
+                                        <div class="widget-body">
+                                            <div  data-morris-chart id="{{quest}}">
+                                            </div>  
+
+
+
+                                        </div>
+                                    </section>
+                            </div>
+
+
+
+
+                        </div>
+                       
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+    </div>
 </div>
