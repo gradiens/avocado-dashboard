@@ -337,19 +337,24 @@ appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainSe
     };
 	
 	//Morris*************************
-	 $scope.morrOptions = {
-		 y1: {
-			element : 'y1',
-		 	data: [{label: 'pureba', value: 3}],
-			colors: ['#F5CB7B', '#FAEEE5', '#f0f0f0']
-		 },
-		 y2: {
-		 	data: [{label: 'pureba2', value: 3}],
-			colors: ['#F5CB7B', '#FAEEE5', '#f0f0f0']
-		 }
-	 };
+	 $scope.morrLineOptions = {
+      element: 'line_prueba',
+      data: [
+        { z: 1419711021979, a: 100, b: 90 },
+        { z: 1419711121979, a: 75,  b: 65 },
+        { z: 1419711221979, a: 50,  b: 40 },
+        { z: 1419711321979, a: 75,  b: 65 },
+        { z: 1419711421979, a: 50,  b: 40 },
+        { z: 1419711521979, a: 75,  b: 65 },
+        { z: 1419711621979, a: 100, b: 90 }
+      ],
+      xkey: 'z',
+      ykeys: ['a', 'b'],
+      labels: ['Series A', 'Series B']
+    };
 	 
 	 var graphs = {};
+     var lineGraphs = {};
 	
 	 console.log("morrOptions:", $scope.morrOptions);
 	 $scope.$watch(function () {
@@ -362,10 +367,22 @@ appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainSe
 		    setCharts();
 		 
         }, false);
+    
+    $scope.$watch(function () {
+            return gradMainService.averages;
+        },
+        function (newVal, oldVal) {
+            console.log("inside watch line", newVal);
+            $scope.morrLineOptions = newVal;
+		    console.log("Reconstructing line graphs");
+//		    setLineCharts();
+		 
+        }, false);
 
 	$scope.gms.fetchTotals().then(function(result){
 		console.log("in controller, promise ready!");
 		setCharts();
+        setLineCharts();
 	}, function(err){
 		console.log("error in promise");
 	});
@@ -385,6 +402,35 @@ appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainSe
 				}
 			});
 		});
-	};
+        
+     };
+     
+     function setLineCharts(){
+		_.each($scope.morrLineOptions, function(el, ind){
+			_.each(el, function(element, index){
+				try{
+					if(!lineGraphs[index])
+						lineGraphs[index] = Morris.Line(element);
+					else
+						lineGraphs[index].setData(element.data);
+				}
+				catch(err){
+					console.log("Small error while loading LineMorris", err);
+				}
+			});
+		});
+        
+     };
+    
+        
+	
+    
+    
+    
+    
+    
 	
 }]);
+
+
+

@@ -200,11 +200,62 @@ appServices.factory('helperService', function ($firebase, fbURL) {
 		return byFirst;
 	}});
 	
+    _.mixin({groupByMultiHour: function (obj, inQ, context) {
+		
+		var byFirst = _.groupBy(obj, inQ + "text" , context);
+        
+		for (var prop in byFirst) {
+			byFirst[prop] = _.groupBy(byFirst[prop], roundHour, context);
+        
+            for (var prop2 in byFirst[prop]){
+                byFirst[prop][prop2] = _.groupBy(byFirst[prop][prop2], inQ + "score", context);
+                var avg = 0;
+                var sum = 0;
+                for( var prop3 in byFirst[prop][prop2]){
+                    avg = avg + byFirst[prop][prop2][prop3].length * prop3;
+                    sum = sum + byFirst[prop][prop2][prop3].length;
+                    byFirst[prop][prop2][prop3] = byFirst[prop][prop2][prop3].length 
+                }
+                byFirst[prop][prop2].average = avg / sum
+                
+            }
+		}
+		return byFirst;
+	}});
+    
+    function roundHour(inObj){
+        var d = new Date(inObj.q1time);
+        d.setMinutes(0,0,0);
+        return d.getTime();
+    };
+    
     
 	
 	s.getTotals = function(inArr, inQ){
-		return  _.groupByMulti(inArr, [inQ + 'text',inQ + 'score'])
+		var res =  _.groupByMulti(inArr, [inQ + 'text',inQ + 'score']);
+        return res;
 	};
+    
+    s.convertToLineMorris = function(inArr, inQ){
+        var res = _.groupByMultiHour(inArr, inQ);
+        var outObj = {};
+        _.each(res, function(element, index){
+            outObj[index] ={
+                element: "line_" + index,
+                xkey: 'z',
+                ykeys: ['a'],
+                labels: ['Series A'],
+                data: []
+            };
+            _.each(element, function(el, ind){
+                outObj[index].data.push({z: Number(ind), a: el.average});
+            });
+        
+        });
+        
+        return outObj;
+    
+    };
 	
 	s.convertToMorris = function(inObj){
 		var outObj = {};
@@ -240,6 +291,13 @@ appServices.factory('gradMainService', function ($firebase, helperService, fbURL
 		y: {},
 		x: {}
 	};
+    
+    s.averages = {
+        y: {},
+        x: {}
+    };
+    
+    
 	var fb = {};
 	
 	s.start = function(inUid){
@@ -292,13 +350,24 @@ appServices.factory('gradMainService', function ($firebase, helperService, fbURL
 					s.totals.y = helperService.convertToMorris(helperService.getTotals(s.answers, 'q1'));
 					s.totals.x = helperService.convertToMorris(helperService.getTotals(s.answers, 'q2'));
 					console.log("After morris:", s.totals);
+                    
+                    s.averages.y = helperService.convertToLineMorris(s.answers, 'q1');
+                    s.averages.x = helperService.convertToLineMorris(s.answers, 'q2');
+                    console.log("After morris lines:", s.averages);
 
 					s.answers.$watch(function(){
 						console.log("answers data changed!, recalculating totals");
 						s.totals.y = helperService.convertToMorris(helperService.getTotals(s.answers, 'q1'));
 						s.totals.x = helperService.convertToMorris(helperService.getTotals(s.answers, 'q2'));
 						//s.totals.Prueba.data[0].value = 7;
+                        
+                        s.averages.y = helperService.convertToLineMorris(s.answers, 'q1');
+                        s.averages.x = helperService.convertToLineMorris(s.answers, 'q2');
 					});
+                    
+                    
+                    //MorrisLine Part
+                  //  console.log("Testing convertToLineMorris", helperService.convertToLineMorris(s.answers, 'q2'));
 					
 					resolve("Loading ready in promise!");
 
