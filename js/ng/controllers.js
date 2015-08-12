@@ -318,40 +318,20 @@ appControllers.controller('loginCtrl', ['$scope', 'loginService', 'fbURL', funct
 /********************************************************/
 /*Gradiens Main Dashboard Controller*********************/
 /********************************************************/
-appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainService', 'fbURL', function ($scope, loginService, gradMainService, fbURL) {
+appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainService', 'helperService', 'fbURL', function ($scope, loginService, gradMainService, helperService, fbURL) {
 	
 	console.log("Starting gradMainController");
     
 	$scope.gms = gradMainService;
+    $scope.hs = helperService;
 	
 	//Activity widget*********************
 	$scope.myVar = {'bg-success' : false, 'bg-danger': true};
 
-	//Sparklines***************
-  	$scope.sparklinePieData = [2,4,6];
-    $scope.sparklinePieOptions = {
-        type: 'pie',
-        width: '100px',
-        height: '100px',
-        sliceColors: ['#F5CB7B', '#FAEEE5', '#f0f0f0']
-    };
+	
 	
 	//Morris*************************
-	 $scope.morrLineOptions = {
-      element: 'line_prueba',
-      data: [
-        { z: 1419711021979, a: 100, b: 90 },
-        { z: 1419711121979, a: 75,  b: 65 },
-        { z: 1419711221979, a: 50,  b: 40 },
-        { z: 1419711321979, a: 75,  b: 65 },
-        { z: 1419711421979, a: 50,  b: 40 },
-        { z: 1419711521979, a: 75,  b: 65 },
-        { z: 1419711621979, a: 100, b: 90 }
-      ],
-      xkey: 'z',
-      ykeys: ['a', 'b'],
-      labels: ['Series A', 'Series B']
-    };
+	 $scope.morrLineOptions = {};
 	 
 	 var graphs = {};
      var lineGraphs = {};
@@ -375,7 +355,7 @@ appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainSe
             console.log("inside watch line", newVal);
             $scope.morrLineOptions = newVal;
 		    console.log("Reconstructing line graphs");
-//		    setLineCharts();
+		    setLineCharts();
 		 
         }, false);
 
@@ -424,7 +404,11 @@ appControllers.controller('gradMainCtrl', ['$scope', 'loginService', 'gradMainSe
     
         
 	
-    
+    $scope.changeLineInterval = function(inInt){
+        $scope.hs.timeInterval = inInt;
+        $scope.gms.refreshLineInterval();
+        setLineCharts();
+    };
     
     
     

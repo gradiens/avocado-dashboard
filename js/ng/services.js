@@ -223,9 +223,12 @@ appServices.factory('helperService', function ($firebase, fbURL) {
 		return byFirst;
 	}});
     
-    function roundHour(inObj){
+    s.timeInterval = 4;
+    
+    function roundHour(inObj,span){
         var d = new Date(inObj.q1time);
-        d.setMinutes(0,0,0);
+        d.setHours(Math.floor(d.getHours()/s.timeInterval) * s.timeInterval, 0,0,0);
+       
         return d.getTime();
     };
     
@@ -245,7 +248,12 @@ appServices.factory('helperService', function ($firebase, fbURL) {
                 xkey: 'z',
                 ykeys: ['a'],
                 labels: ['Series A'],
-                data: []
+                data: [],
+                hoverCallback: function (index, options, content, row) {
+                    var d = new Date(row.z);
+                    var text = "<div class='morris-hover-row-label'>" + d.toLocaleString() + "</div><div class='morris-hover-point' style='color: #0b62a4'> Promedio: " + row.a.toFixed(2) + " </div>"
+                    return text;
+                }
             };
             _.each(element, function(el, ind){
                 outObj[index].data.push({z: Number(ind), a: el.average});
@@ -380,6 +388,11 @@ appServices.factory('gradMainService', function ($firebase, helperService, fbURL
 			
 			return promise;
 	}
+    
+    s.refreshLineInterval = function(){
+        s.averages.y = helperService.convertToLineMorris(s.answers, 'q1');
+        s.averages.x = helperService.convertToLineMorris(s.answers, 'q2');
+    };
 	
 	return s;
 });
