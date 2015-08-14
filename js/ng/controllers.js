@@ -278,6 +278,9 @@ appControllers.controller('loginCtrl', ['$scope', 'loginService', 'fbURL', funct
         password: "",
         name: ""
     };
+    
+    $scope.lS = loginService;
+    
     $scope.logWithPass = function () {
     
         var email = this.user.email;

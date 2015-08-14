@@ -1,5 +1,5 @@
 <!-- need this .js class to initiate slimscroll -->
-<div class="js-sidebar-content">
+<div class="js-sidebar-content" ng-controller="loginCtrl">
     <header class="logo hidden-xs">
         <a href="index.html">{{app.name}}</a>
     </header>
@@ -36,6 +36,25 @@
 				<li><a data-ui-sref="app.page({ page: 'widgets_gradiens', child: null })">Dashboard Principal</a></li>
             </ul>
         </li>
+        
+        <li>
+            <!-- an example of nested submenu. basic bootstrap collapse component -->
+            <a class="collapsed" data-target="#sidebar-user" data-toggle="collapse" data-parent="#sidebar">
+                    <span class="icon">
+                        <i class="fa fa-user"></i>
+                    </span>
+               Usuario
+                <i class="toggle fa fa-angle-down"></i>
+            </a>
+            <ul id="sidebar-user" class="collapse">
+                <li><a> {{lS.authData.password.email}}</a></li>
+				<li><a ng-click="logout()" >
+                    <span class="icon">
+                        <i class="fa fa-sign-out"></i>
+                    </span>
+                    Logout</a></li>
+            </ul>
+        </li>
       
      <!--   <li>
             <a data-ui-sref="app.page({ page: 'charts', child: null })">
@@ -46,8 +65,6 @@
             </a>
         </li> -->
     </ul>
-    
-    
     
     
    
